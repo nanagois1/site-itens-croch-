@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="auth-body">
+
+  <div class="auth-box">
+    <h1>Entrar 💗</h1>
+
+    <label>
+      Email
+      <input type="email" id="email" placeholder="Digite seu email">
+    </label>
+
+    <label>
+      Senha
+      <input type="password" id="senha" placeholder="Digite sua senha">
+    </label>
+
+    <button onclick="login()">Entrar</button>
+    <button onclick="registrar()">Criar conta</button>
+  </div>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCgi_S_tix76Abbi1rF-vZq8zixsGn1G8E",
+      authDomain: "site-croche.firebaseapp.com",
+      projectId: "site-croche",
+      storageBucket: "site-croche.firebasestorage.app",
+      messagingSenderId: "679960173487",
+      appId: "1:679960173487:web:269768a9c99f318185ad5a"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    function registrar() {
+      auth.createUserWithEmailAndPassword(
+        email.value,
+        senha.value
+      ).then(() => {
+        window.location.href = "index.html";
+      }).catch(err => alert(err.message));
+    }
+
+    function login() {
+      auth.signInWithEmailAndPassword(
+        email.value,
+        senha.value
+      ).then(() => {
+        window.location.href = "index.html";
+      }).catch(err => alert(err.message));
+    }
+  </script>
+
+</body>
+</html>
