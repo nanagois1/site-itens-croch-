@@ -1,0 +1,120 @@
+* {
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* BASE */
+body {
+  background-color: #eef1f7; /* bege frio puxado pro azul */
+  margin: 0;
+  padding: 30px;
+  color: #2f3a4a;
+  text-align: center;
+}
+
+h1 {
+  color: #4f6cc9;
+  margin-bottom: 30px;
+}
+
+/* FORM */
+.form-box {
+  background-color: #f5f7ff;
+  border: 2px solid #a7b7e7;
+  border-radius: 12px;
+  padding: 20px;
+  max-width: 400px;
+  margin: 0 auto 40px;
+}
+
+.form-box label {
+  display: block;
+  text-align: left;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+.form-box input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border-radius: 6px;
+  border: 1px solid #b8c4e6;
+}
+
+.form-box button {
+  width: 100%;
+  background-color: #4f6cc9;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+/* GALERIA */
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  align-items: flex-start; /* evita espaço branco */
+}
+
+/* CARD */
+.card {
+  width: 260px;
+  position: relative;
+  overflow: hidden;
+  background: none;
+}
+
+/* IMAGEM */
+.card img {
+  width: 100%;
+  height: auto;
+  display: block; /* remove espaço fantasma */
+  border-radius: 12px;
+  border: 3px solid #a7b7e7;
+}
+
+/* OVERLAY */
+.info {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(79, 108, 201, 0.75);
+  border-radius: 12px; /* IGUAL ao da imagem */
+  padding: 15px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  color: #ffffff;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  text-align: center;
+}
+
+/* APARECE AO PASSAR O MOUSE */
+.card:hover .info {
+  opacity: 1;
+}
+
+.info a {
+  color: #e8ecff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.info button {
+  margin-top: 10px;
+  background-color: #2f49a3;
+  border: none;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}

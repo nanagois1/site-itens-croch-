@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Lista de Crochê</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <h1>Meu cantinho 💗</h1>
+
+  <form id="form" class="form-box">
+
+    <label>
+      Imagem:
+      <input type="file" id="image" accept="image/*" required>
+    </label>
+
+    <label>
+      Linha:
+      <input type="text" id="linha" required>
+    </label>
+
+    <label>
+      Cor:
+      <input type="text" id="cor" required>
+    </label>
+
+    <label>
+      Link:
+      <input type="url" id="link" required>
+    </label>
+
+    <button type="submit">Adicionar 💕</button>
+  </form>
+
+  <div id="gallery" class="gallery"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
