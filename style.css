@@ -199,11 +199,11 @@ h1 {
 .made-by {
   position: fixed;
   top: 8px;
-  left: 50%;
-  transform: translateX(-50%);
+  right: 10px;
   font-size: 0.7rem;
-  opacity: 0.5;
+  opacity: 0.45;
   color: var(--primary);
-  pointer-events: none; /* não atrapalha cliques */
-  z-index: 999;
+  pointer-events: none;
+  z-index: 9999;
 }
+
