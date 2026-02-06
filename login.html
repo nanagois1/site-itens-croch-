@@ -34,6 +34,12 @@
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword
   } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+  import {
+    getFirestore,
+    doc,
+    setDoc,
+    getDoc
+  } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyCgi_S_tix76Abbi1rF-vZq8zixsGn1G8E",
@@ -46,29 +52,41 @@
 
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
+  const db = getFirestore(app);
 
-  window.login = function () {
-    const email = document.getElementById("email").value;
-    const senha = document.getElementById("senha").value;
+  window.registrar = async function () {
+    const email = emailInput.value;
+    const senha = senhaInput.value;
+    const theme = themeColor.value;
 
-    signInWithEmailAndPassword(auth, email, senha)
-      .then(() => {
-        window.location.href = "index.html";
-      })
-      .catch(err => alert(err.message));
+    const cred = await createUserWithEmailAndPassword(auth, email, senha);
+
+    await setDoc(doc(db, "users", cred.user.uid), {
+      theme
+    });
+
+    alert("Conta criada 💗");
   };
 
-  window.registrar = function () {
-    const email = document.getElementById("email").value;
-    const senha = document.getElementById("senha").value;
+  window.login = async function () {
+    const email = emailInput.value;
+    const senha = senhaInput.value;
 
-    createUserWithEmailAndPassword(auth, email, senha)
-      .then(() => alert("Conta criada com sucesso!"))
-      .catch(err => alert(err.message));
+    await signInWithEmailAndPassword(auth, email, senha);
+    window.location.href = "index.html";
   };
+
+  const emailInput = document.getElementById("email");
+  const senhaInput = document.getElementById("senha");
+  const themeColor = document.getElementById("themeColor");
 </script>
+
+
+<label>
+  Escolha o tema 💕
+  <input type="color" id="themeColor" value="#4f6cc9">
+</label>
 
 
 </body>
 </html>
-
