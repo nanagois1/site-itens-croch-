@@ -1,15 +1,36 @@
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
-}
-
 const form = document.getElementById("form");
 const gallery = document.getElementById("gallery");
 
-let items = JSON.parse(localStorage.getItem("items")) || [];
+let userId = null;
 
-/* CARREGA AO ABRIR O SITE */
-items.forEach(item => createCard(item));
+/* QUANDO O USUÁRIO LOGAR */
+auth.onAuthStateChanged(user => {
+  if (!user) {
+    window.location.href = "login.html";
+    return;
+  }
 
+  userId = user.uid;
+  carregarItens();
+});
+
+/* CARREGA ITENS DO FIRESTORE */
+function carregarItens() {
+  gallery.innerHTML = "";
+
+  db.collection("users")
+    .doc(userId)
+    .collection("items")
+    .orderBy("createdAt")
+    .get()
+    .then(snapshot => {
+      snapshot.forEach(doc => {
+        createCard({ id: doc.id, ...doc.data() });
+      });
+    });
+}
+
+/* ADICIONA ITEM */
 form.addEventListener("submit", function (e) {
   e.preventDefault();
 
@@ -24,29 +45,29 @@ form.addEventListener("submit", function (e) {
   const reader = new FileReader();
 
   reader.onload = function () {
-    const item = {
-      id: Date.now(),
-      image: reader.result,
-      linha,
-      cor,
-      link
-    };
-
-    items.push(item);
-    localStorage.setItem("items", JSON.stringify(items));
-
-    createCard(item);
-    form.reset();
+    db.collection("users")
+      .doc(userId)
+      .collection("items")
+      .add({
+        image: reader.result,
+        linha,
+        cor,
+        link,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      })
+      .then(() => {
+        form.reset();
+        carregarItens();
+      });
   };
 
   reader.readAsDataURL(file);
 });
 
-/* FUNÇÃO PRA CRIAR O CARD */
+/* CRIA CARD */
 function createCard(item) {
   const card = document.createElement("div");
   card.classList.add("card");
-  card.dataset.id = item.id;
 
   const img = document.createElement("img");
   img.src = item.image;
@@ -65,7 +86,7 @@ function createCard(item) {
   `;
 
   info.querySelector("button").addEventListener("click", () => {
-    removeItem(item.id);
+    removerItem(item.id);
     card.remove();
   });
 
@@ -74,12 +95,16 @@ function createCard(item) {
   gallery.appendChild(card);
 }
 
-/* REMOVE DO LOCALSTORAGE */
-function removeItem(id) {
-  items = items.filter(item => item.id !== id);
-  localStorage.setItem("items", JSON.stringify(items));
+/* REMOVE ITEM */
+function removerItem(id) {
+  db.collection("users")
+    .doc(userId)
+    .collection("items")
+    .doc(id)
+    .delete();
 }
 
+/* LOGOUT */
 function logout() {
   auth.signOut().then(() => {
     window.location.href = "login.html";
