@@ -11,6 +11,18 @@ auth.onAuthStateChanged(user => {
   }
 
   userId = user.uid;
+
+  // aplica tema do usuário
+  db.collection("users")
+    .doc(userId)
+    .get()
+    .then(doc => {
+      if (doc.exists && doc.data().theme) {
+        document.documentElement.style
+          .setProperty("--primary", doc.data().theme);
+      }
+    });
+
   carregarItens();
 });
 
