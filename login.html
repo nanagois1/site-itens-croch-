@@ -7,6 +7,7 @@
 </head>
 
 <body class="auth-body">
+  <div class="made-by">*Made by nanagois</div>
 
   <div class="auth-box">
     <h1>Entrar 💗</h1>
@@ -26,40 +27,47 @@
   </div>
 
   <!-- Firebase -->
-  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+  import {
+    getAuth,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword
+  } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-  <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyCgi_S_tix76Abbi1rF-vZq8zixsGn1G8E",
-      authDomain: "site-croche.firebaseapp.com",
-      projectId: "site-croche",
-      storageBucket: "site-croche.firebasestorage.app",
-      messagingSenderId: "679960173487",
-      appId: "1:679960173487:web:269768a9c99f318185ad5a"
-    };
+  const firebaseConfig = {
+    apiKey: "AIzaSyCgi_S_tix76Abbi1rF-vZq8zixsGn1G8E",
+    authDomain: "site-croche.firebaseapp.com",
+    projectId: "site-croche",
+    storageBucket: "site-croche.firebasestorage.app",
+    messagingSenderId: "679960173487",
+    appId: "1:679960173487:web:f9889e1f74a7264e85ad5"
+  };
 
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
 
-    function registrar() {
-      auth.createUserWithEmailAndPassword(
-        email.value,
-        senha.value
-      ).then(() => {
+  window.login = function () {
+    const email = document.getElementById("email").value;
+    const senha = document.getElementById("senha").value;
+
+    signInWithEmailAndPassword(auth, email, senha)
+      .then(() => {
         window.location.href = "index.html";
-      }).catch(err => alert(err.message));
-    }
+      })
+      .catch(err => alert(err.message));
+  };
 
-    function login() {
-      auth.signInWithEmailAndPassword(
-        email.value,
-        senha.value
-      ).then(() => {
-        window.location.href = "index.html";
-      }).catch(err => alert(err.message));
-    }
-  </script>
+  window.registrar = function () {
+    const email = document.getElementById("email").value;
+    const senha = document.getElementById("senha").value;
+
+    createUserWithEmailAndPassword(auth, email, senha)
+      .then(() => alert("Conta criada com sucesso!"))
+      .catch(err => alert(err.message));
+  };
+</script>
+
 
 </body>
 </html>
