@@ -130,20 +130,20 @@ h1 {
    GALERIA
 ====================== */
 .gallery {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
-  align-items: flex-start;
+  column-count: 3;
+  column-gap: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
 /* ======================
    CARD
 ====================== */
 .card {
-  width: 260px;
+  width: 100%;
+  margin-bottom: 20px;
+  break-inside: avoid;
   position: relative;
-  overflow: hidden;
 }
 
 /* IMAGEM */
@@ -152,7 +152,7 @@ h1 {
   height: auto;
   display: block;
   border-radius: 12px;
-  border: 3px solid var(--border);
+  border: 3px solid #a7b7e7;
 }
 
 /* OVERLAY */
@@ -198,11 +198,23 @@ h1 {
 .made-by {
   position: fixed;
   top: 8px;
-  left: 50%;
-  transform: translateX(-50%);
+  right: 10px;
   font-size: 0.7rem;
-  opacity: 0.5;
+  opacity: 0.45;
   color: var(--primary);
-  pointer-events: none; /* não atrapalha cliques */
-  z-index: 999;
+  pointer-events: none;
+  z-index: 9999;
+}
+ 
+
+@media (max-width: 900px) {
+  .gallery {
+    column-count: 2;
+  }
+}
+
+@media (max-width: 500px) {
+  .gallery {
+    column-count: 1;
+  }
 }
